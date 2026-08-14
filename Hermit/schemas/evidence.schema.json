@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hermit/evidence.schema.json",
+  "title": "RustEvidence",
+  "type": "object",
+  "required": ["evidence_id", "concept_id", "source_type", "source_ref"],
+  "properties": {
+    "evidence_id": { "type": "string" },
+    "concept_id": { "type": "string" },
+    "source_type": { "type": "string", "enum": ["book", "reference", "rfc", "stdlib_docs", "compiler_test", "crate_docs", "issue"] },
+    "source_ref": { "type": "string" },
+    "strength": { "type": "number", "minimum": 0, "maximum": 1 },
+    "verified": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

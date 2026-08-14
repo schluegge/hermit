@@ -1,0 +1,25 @@
+{
+  "name": "Hermit",
+  "visibility": "private",
+  "domain": "rust_completeness_knowledge_graph",
+  "goals": [
+    "categorize_rust_concepts",
+    "track_evidence",
+    "represent_relationships",
+    "measure_completeness",
+    "support_coverage_proof_over_example_retrieval"
+  ],
+  "design_principles": [
+    "machine_readable_first",
+    "minimal_human_prose",
+    "taxonomy_over_snippets",
+    "evidence_relationships_composition_proof"
+  ],
+  "artifact_roots": {
+    "manifests": "manifests/",
+    "schemas": "schemas/",
+    "indexes": "indexes/",
+    "graph": "graph/",
+    "tooling": "tooling/"
+  }
+}

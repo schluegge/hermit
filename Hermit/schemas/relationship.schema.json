@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hermit/relationship.schema.json",
+  "title": "RustRelationship",
+  "type": "object",
+  "required": ["edge_id", "from", "to", "relation"],
+  "properties": {
+    "edge_id": { "type": "string" },
+    "from": { "type": "string" },
+    "to": { "type": "string" },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "defines",
+        "depends_on",
+        "constrains",
+        "implements",
+        "composes_with",
+        "verified_by"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
