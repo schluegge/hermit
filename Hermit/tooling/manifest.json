@@ -1,0 +1,10 @@
+{
+  "planned_tools": [
+    "taxonomy_builder",
+    "evidence_ingestor",
+    "graph_validator",
+    "completeness_scorer",
+    "grounding_verifier",
+    "composition_synthesizer"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "phases": [
+    {
+      "id": "phase_1",
+      "name": "rust_taxonomy",
+      "status": "planned"
+    },
+    {
+      "id": "phase_2",
+      "name": "evidence_collection",
+      "status": "planned"
+    },
+    {
+      "id": "phase_3",
+      "name": "graph_schema",
+      "status": "planned"
+    },
+    {
+      "id": "phase_4",
+      "name": "completeness_scoring",
+      "status": "planned"
+    },
+    {
+      "id": "phase_5",
+      "name": "verification_grounding",
+      "status": "planned"
+    },
+    {
+      "id": "phase_6",
+      "name": "composition_synthesis",
+      "status": "planned"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "scoring_dimensions": [
+    "defined",
+    "implemented",
+    "documented",
+    "tested",
+    "stable",
+    "composable",
+    "verified"
+  ],
+  "items": []
+}

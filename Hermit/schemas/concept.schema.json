@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hermit/concept.schema.json",
+  "title": "RustConcept",
+  "type": "object",
+  "required": ["concept_id", "category", "label", "coverage_state"],
+  "properties": {
+    "concept_id": { "type": "string" },
+    "category": { "type": "string" },
+    "label": { "type": "string" },
+    "coverage_state": { "type": "string", "enum": ["unknown", "partial", "covered", "verified"] },
+    "related_concepts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
