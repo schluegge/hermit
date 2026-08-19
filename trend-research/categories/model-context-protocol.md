@@ -1,0 +1,67 @@
+# model-context-protocol
+
+Query: `topic:model-context-protocol created:2025-01-01..2026-08-19 stars:>1000`
+
+Snapshot: 2026-08-19. Result page 1; page 2 was empty (exhaustion gate PASS).
+
+- https://github.com/HKUDS/nanobot
+- https://github.com/DeusData/codebase-memory-mcp
+- https://github.com/ahujasid/blender-mcp
+- https://github.com/microsoft/mcp-for-beginners
+- https://github.com/CoplayDev/unity-mcp
+- https://github.com/mcp-use/mcp-use
+- https://github.com/holaboss-ai/holaOS
+- https://github.com/grab/cursor-talk-to-figma-mcp
+- https://github.com/getsentry/XcodeBuildMCP
+- https://github.com/MinishLab/semble
+- https://github.com/WenyuChiou/awesome-agentic-ai-zh
+- https://github.com/21st-dev/magic-mcp
+- https://github.com/oomol-lab/open-connector
+- https://github.com/KnockOutEZ/wigolo
+- https://github.com/homeassistant-ai/ha-mcp
+- https://github.com/IBM/mcp-context-forge
+- https://github.com/atilaahmettaner/tradingview-mcp
+- https://github.com/IvanMurzak/Unity-MCP
+- https://github.com/bethington/ghidra-mcp
+- https://github.com/stickerdaniel/linkedin-mcp-server
+- https://github.com/skyhook-io/radar
+- https://github.com/ahujasid/ableton-mcp
+- https://github.com/zinja-coder/jadx-ai-mcp
+- https://github.com/metatool-ai/metamcp
+- https://github.com/jgravelle/jcodemunch-mcp
+- https://github.com/nitrocloudofficial/nitrostack
+- https://github.com/chrisryugj/korean-law-mcp
+- https://github.com/jamubc/gemini-mcp-tool
+- https://github.com/IBM/AssetOpsBench
+- https://github.com/tractorjuice/arc-kit
+- https://github.com/stacklok/toolhive
+- https://github.com/CoderGamester/mcp-unity
+- https://github.com/Syngnat/GoNavi
+- https://github.com/ravitemer/mcphub.nvim
+- https://github.com/iFurySt/open-codex-computer-use
+- https://github.com/jau123/MeiGen-AI-Design-MCP
+- https://github.com/trpc-group/trpc-agent-go
+- https://github.com/zhu1090093659/deepseek-pp
+- https://github.com/0xSteph/pentest-ai
+- https://github.com/vibheksoni/stealth-browser-mcp
+- https://github.com/can4hou6joeng4/boss-agent-cli
+- https://github.com/universal-tool-calling-protocol/code-mode
+- https://github.com/uber/ADR
+- https://github.com/OpenOSINT/OpenOSINT
+- https://github.com/kimsungwhee/apple-docs-mcp
+- https://github.com/gyoridavid/short-video-maker
+- https://github.com/nicobailon/pi-mcp-adapter
+- https://github.com/nduckmink/arkon
+- https://github.com/mcpjungle/MCPJungle
+- https://github.com/thClaws/thClaws
+- https://github.com/pipeboard-co/meta-ads-mcp
+- https://github.com/cinderline/northcinder
+- https://github.com/AI-QL/tuui
+- https://github.com/mukul975/cve-mcp-server
+- https://github.com/massgen/MassGen
+- https://github.com/fetchai/innovation-lab-examples
+- https://github.com/LING71671/open-reverselab
+- https://github.com/awslabs/cli-agent-orchestrator
+- https://github.com/irinabuht12-oss/google-meta-ads-ga4-mcp
+- https://github.com/thetahealth/mirobody
+- https://github.com/xuzhougeng/wisp-science
