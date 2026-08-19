@@ -41,7 +41,7 @@ Snapshot: 2026-08-19. Result pages 1–2; page 3 was empty (exhaustion gate PASS
 - https://github.com/hexdocom/lemonai
 - https://github.com/pguso/rag-from-scratch
 - https://github.com/lucaswalter/n8n-ai-automations
-- https://github.com/versuscontrol/devops-ai-guidelines
+- https://github.com/VersusControl/devops-ai-guidelines
 - https://github.com/zjunlp/LightMem
 - https://github.com/IAAR-Shanghai/Awesome-AI-Memory
 - https://github.com/TencentCloudADP/youtu-graphrag
