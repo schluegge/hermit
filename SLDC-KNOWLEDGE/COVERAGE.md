@@ -23,7 +23,7 @@ Status semantics are defined in `README.md`.
 | MCP | complete | `agent-protocols.md` | Current official protocol role, primitives, transport direction, selection/integration documented |
 | A2A | complete | `agent-protocols.md` | Official v1.0 role, interoperability scope, selection/integration documented |
 | ACP | complete | `agent-protocols.md` | Official Zed role, editor-agent interoperability and selection/integration documented |
-| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
+| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md`, `supply-chain-security-fuzzing.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
 
 ## Finite Definition of Done
 
@@ -60,6 +60,7 @@ The following expansion rows track whether at least one current, primary-source-
 | Additional game engines | verified representative | `domain-expansion-2026-08.md` | Unreal Engine 5.8 adds a second independently documented engine implementation |
 | Additional ML lifecycle systems | verified representative | `domain-expansion-2026-08.md` | MLflow 3.14.0 adds tracking, registry, lineage and evaluation lifecycle evidence |
 | Vendor-specific embedded stacks | verified representative | `domain-expansion-2026-08.md` | ESP-IDF adds vendor-specific build/flash/monitor/debug/on-target-test evidence |
+| Supply-chain integrity / security posture / fuzzing | verified representative | `supply-chain-security-fuzzing.md` | SLSA 1.2 provenance/build levels, Sigstore/Cosign signing+attestation verification, OpenSSF Scorecard checks, OSS-Fuzz/CIFuzz, bounded LLM fuzz-target research |
 
 ## Still-open expansion frontier
 
@@ -69,4 +70,6 @@ These are deliberately not marked complete because the discovery universe is ope
 - additional game engines such as Godot and proprietary engines;
 - ML data validation, feature stores and additional orchestration/lifecycle systems;
 - MCU/FPGA/automotive and other vendor-specific embedded ecosystems;
-- additional domain-specific supply-chain, security, fuzzing, profiling and deployment systems.
+- SBOM generation/consumption, dependency vulnerability policy, secret scanning, runtime/application security and deployment-policy implementations beyond the representative supply-chain baseline;
+- additional fuzzing systems, language-native fuzzers, profiling and deployment systems;
+- further evidence-backed AI security/fuzzing/release/deployment automation, with generated outputs kept behind deterministic verification gates.
