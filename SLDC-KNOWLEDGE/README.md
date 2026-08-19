@@ -23,7 +23,8 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `COVERAGE.md` — finite required-category audit and completion criteria.
 - `core-toolchain.md` — language-agnostic baseline for debugging, linting/static analysis, formatting, testing, runners/build execution, LSP, best practices, and package/library ecosystems.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
-- `ai-sdlc.md` — verified AI-assisted SDLC capabilities and unresolved coverage.
+- `ai-sdlc.md` — verified AI-assisted SDLC capabilities and unresolved breadth.
+- `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
 - `checkpoints/` — append-only research-run checkpoints.
 
 ## Scope
