@@ -30,15 +30,13 @@ Primary AI categories:
 - `natural-language-processing`
 - `computer-vision`
 
-Additional specialist categories are recorded when queried during the snapshot.
-
 Every category uses the same hard qualifiers:
 
 ```text
 created:2025-01-01..2026-08-19 stars:>1000
 ```
 
-## Exhaustion gates already verified
+## Exhaustion gates verified
 
 A category is marked exhausted only after requesting the first page that returns zero repositories.
 
@@ -46,7 +44,7 @@ A category is marked exhausted only after requesting the first page that returns
 |---|---:|---:|---|
 | `ai` | 1–7 | 8 | PASS |
 | `llm` | 1–6 | 7 | PASS |
-| `artificial-intelligence` | 1–2 | 3 | PASS |
+| `artificial-intelligence` | 1 | 2 | PASS |
 | `generative-ai` | 1 | 2 | PASS |
 | `machine-learning` | 1 | 2 | PASS |
 | `deep-learning` | 1 | 2 | PASS |
@@ -59,7 +57,7 @@ A category is marked exhausted only after requesting the first page that returns
 
 ## Evidence format
 
-Repository links are stored under `trend-research/categories/`. The category directory is the explicit GitHub topic that caused inclusion. A repository may legitimately appear in more than one category because GitHub repositories may have several relevant topics.
+Repository links are stored under `trend-research/categories/`. Large categories are split into page files mirroring GitHub Search pagination. A repository may legitimately appear in more than one category because GitHub repositories may have several relevant topics.
 
 Every stored repository link uses the canonical form:
 
