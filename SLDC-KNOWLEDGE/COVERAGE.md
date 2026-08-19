@@ -53,10 +53,20 @@ The following expansion rows track whether at least one current, primary-source-
 | C / C++ | verified representative | `language-domain-matrix.md` | clang-tidy, clang-format, clangd, LLDB, CMake/CTest integration |
 | .NET / C# | verified representative | `language-domain-matrix.md` | Roslyn analyzers, `dotnet format`, `dotnet test` |
 | Mobile / Android | verified representative | `language-domain-matrix.md` | Gradle/AGP, Android Lint, tests/device execution, profiler |
-| Embedded / HIL | verified representative | `language-domain-matrix.md` | Zephyr west build/flash/debug and Twister simulation/device/HIL testing |
-| Data / ML | verified representative | `language-domain-matrix.md` | PyTorch profiler and distributed profiling as domain-specific evidence surfaces |
-| Games | verified representative | `language-domain-matrix.md` | Unity Test Framework/performance testing and Profiler |
-| Apple / iOS | unresolved | — | No evidence package written yet |
-| Additional game engines | unresolved | — | Unity is the only currently documented representative |
-| Additional ML lifecycle systems | unresolved | — | Data validation, experiment tracking and model registry remain open |
-| Vendor-specific embedded stacks | unresolved | — | Zephyr is the only currently documented representative |
+| Apple / iOS | verified representative | `domain-expansion-2026-08.md` | Xcode devices/Simulator, debugger/Instruments, Swift Testing/XCTest, performance testing, Xcode Cloud |
+| Embedded / HIL | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | Zephyr west/Twister plus ESP-IDF build/flash/monitor/on-target testing |
+| Data / ML | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | PyTorch profiling plus MLflow experiment tracking, model registry and evaluation |
+| Games | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | Unity testing/profiler plus Unreal automation testing/build automation |
+| Additional game engines | verified representative | `domain-expansion-2026-08.md` | Unreal Engine 5.8 adds a second independently documented engine implementation |
+| Additional ML lifecycle systems | verified representative | `domain-expansion-2026-08.md` | MLflow 3.14.0 adds tracking, registry, lineage and evaluation lifecycle evidence |
+| Vendor-specific embedded stacks | verified representative | `domain-expansion-2026-08.md` | ESP-IDF adds vendor-specific build/flash/monitor/debug/on-target-test evidence |
+
+## Still-open expansion frontier
+
+These are deliberately not marked complete because the discovery universe is open:
+
+- additional Apple command-line build/signing/distribution detail beyond the current representative baseline;
+- additional game engines such as Godot and proprietary engines;
+- ML data validation, feature stores and additional orchestration/lifecycle systems;
+- MCU/FPGA/automotive and other vendor-specific embedded ecosystems;
+- additional domain-specific supply-chain, security, fuzzing, profiling and deployment systems.

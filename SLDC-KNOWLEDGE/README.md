@@ -23,6 +23,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `COVERAGE.md` — finite required-category audit and completion criteria plus non-exhaustive expansion coverage.
 - `core-toolchain.md` — language-agnostic baseline for debugging, linting/static analysis, formatting, testing, runners/build execution, LSP, best practices, and package/library ecosystems.
 - `language-domain-matrix.md` — verified implementations for JS/TS/Node, JVM/Java, C/C++, .NET/C#, Android, embedded/HIL, data/ML and games.
+- `domain-expansion-2026-08.md` — additional primary-source-backed domain baselines for Apple/iOS/Xcode, Unreal Engine, MLflow and ESP-IDF.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
 - `ai-sdlc.md` — cross-vendor AI-SDLC baseline, coding-tool taxonomy, verified automation classes, selection criteria and non-exhaustive research frontier.
 - `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
@@ -34,4 +35,4 @@ The taxonomy is intended to apply from small scripts/static websites through ser
 
 The 18 explicitly required category baselines can be complete while discovery continues. A `complete` category is not an exhaustive catalog of every language, tool, vendor, domain, or future AI capability.
 
-The language/domain matrix is intentionally representative rather than prescriptive. A verified implementation demonstrates how a category is realized in an ecosystem; it does not imply that the implementation is the only or universally best choice for that ecosystem.
+The language/domain coverage is intentionally representative rather than prescriptive. A verified implementation demonstrates how a category is realized in an ecosystem; it does not imply that the implementation is the only or universally best choice for that ecosystem.
