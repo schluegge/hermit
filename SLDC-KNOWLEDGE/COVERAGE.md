@@ -41,3 +41,22 @@ A required category may be marked `complete` only when all six are present and e
 **18 / 18 named required categories satisfy the finite baseline Definition of Done as of 2026-08-19.**
 
 This is a coverage claim about the explicitly named taxonomy only. It is **not** a claim that all software-development tools, languages, domains, AI products, or AI-automation possibilities have been exhaustively enumerated. Open-ended discovery continues and new evidence must be deduplicated into the existing taxonomy.
+
+## Non-exhaustive language/domain expansion
+
+The following expansion rows track whether at least one current, primary-source-backed implementation set has been documented for each high-value ecosystem/domain. `verified representative` means a real toolchain/domain baseline is evidenced; it does **not** mean the ecosystem is exhaustively cataloged.
+
+| Ecosystem / domain | Expansion status | Evidence file | Verified scope |
+|---|---|---|---|
+| JavaScript / TypeScript / Node.js | verified representative | `language-domain-matrix.md` | Compiler/typecheck, language service, debugger, stable built-in test runner |
+| JVM / Java | verified representative | `language-domain-matrix.md` | JDK 26 compiler/debugger/REPL/diagnostics plus current JUnit platform |
+| C / C++ | verified representative | `language-domain-matrix.md` | clang-tidy, clang-format, clangd, LLDB, CMake/CTest integration |
+| .NET / C# | verified representative | `language-domain-matrix.md` | Roslyn analyzers, `dotnet format`, `dotnet test` |
+| Mobile / Android | verified representative | `language-domain-matrix.md` | Gradle/AGP, Android Lint, tests/device execution, profiler |
+| Embedded / HIL | verified representative | `language-domain-matrix.md` | Zephyr west build/flash/debug and Twister simulation/device/HIL testing |
+| Data / ML | verified representative | `language-domain-matrix.md` | PyTorch profiler and distributed profiling as domain-specific evidence surfaces |
+| Games | verified representative | `language-domain-matrix.md` | Unity Test Framework/performance testing and Profiler |
+| Apple / iOS | unresolved | — | No evidence package written yet |
+| Additional game engines | unresolved | — | Unity is the only currently documented representative |
+| Additional ML lifecycle systems | unresolved | — | Data validation, experiment tracking and model registry remain open |
+| Vendor-specific embedded stacks | unresolved | — | Zephyr is the only currently documented representative |
