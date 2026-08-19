@@ -23,7 +23,7 @@ Status semantics are defined in `README.md`.
 | MCP | complete | `agent-protocols.md` | Current official protocol role, primitives, transport direction, selection/integration documented |
 | A2A | complete | `agent-protocols.md` | Official v1.0 role, interoperability scope, selection/integration documented |
 | ACP | complete | `agent-protocols.md` | Official Zed role, editor-agent interoperability and selection/integration documented |
-| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md`, `supply-chain-security-fuzzing.md`, `application-security-sbom-policy.md`, `container-iac-cloud-mobile-security.md`, `release-deployment-progressive-delivery.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
+| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md`, `supply-chain-security-fuzzing.md`, `application-security-sbom-policy.md`, `container-iac-cloud-mobile-security.md`, `release-deployment-progressive-delivery.md`, `release-safety-flags-database-nonk8s.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
 
 ## Finite Definition of Done
 
@@ -64,6 +64,7 @@ The following expansion rows track whether at least one current, primary-source-
 | Application security / SBOM / dependency / deployment policy | verified representative | `application-security-sbom-policy.md` | SPDX 3.0 + CycloneDX 1.7 SBOM, dependency review/alerts, secret scanning, CodeQL/SARIF SAST, ZAP DAST, Falco runtime detection, OPA/Gatekeeper admission policy |
 | Container/image + IaC + cloud posture + mobile AppSec | verified representative | `container-iac-cloud-mobile-security.md` | Trivy image/repository scanning, Checkov/Trivy IaC scanning, AWS Security Hub CSPM, OWASP MASVS/MASTG, bounded GitHub/GitLab AI security remediation |
 | Release/deployment + rollback + progressive delivery | verified representative | `release-deployment-progressive-delivery.md` | Kubernetes rollout status/history/undo, GitHub environment gates, Argo Rollouts and Flagger metric-gated progressive delivery, bounded GitLab AI pipeline repair |
+| Feature flags + database migrations + non-Kubernetes delivery | verified representative | `release-safety-flags-database-nonk8s.md` | LaunchDarkly release/kill-switch/guarded-rollout controls, Flyway migrate/validate/repair/undo boundaries, AWS CodeDeploy canary/linear/health/rollback semantics |
 
 ## Still-open expansion frontier
 
@@ -78,5 +79,6 @@ These are deliberately not marked complete because the discovery universe is ope
 - additional multi-cloud CSPM/CNAPP implementations and concrete mobile SAST/DAST/runtime tools mapped to MASVS/MASTG;
 - additional IaC scanners/policy engines and rule-coverage comparisons;
 - additional fuzzing systems, language-native fuzzers and profiling systems;
-- non-Kubernetes release/progressive-delivery systems, feature-flag/kill-switch systems, database-migration release safety, fleet/device rollout and store-release semantics;
+- desktop/mobile/store release semantics, device/fleet rollout and recovery, additional feature-flag implementations, and zero-downtime database expand/contract evidence across multiple database engines;
+- SLO/error-budget-driven release gates across additional observability stacks;
 - further evidence-backed AI security/fuzzing/release/deployment automation, especially release-specific systems beyond CI/CD diagnosis/repair, with generated outputs kept behind deterministic verification gates.
