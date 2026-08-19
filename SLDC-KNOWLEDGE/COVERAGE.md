@@ -23,7 +23,7 @@ Status semantics are defined in `README.md`.
 | MCP | complete | `agent-protocols.md` | Current official protocol role, primitives, transport direction, selection/integration documented |
 | A2A | complete | `agent-protocols.md` | Official v1.0 role, interoperability scope, selection/integration documented |
 | ACP | complete | `agent-protocols.md` | Official Zed role, editor-agent interoperability and selection/integration documented |
-| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md`, `supply-chain-security-fuzzing.md`, `application-security-sbom-policy.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
+| AI-driven automation | complete | `ai-sdlc.md`, `ai-ops-memory-context.md`, `agent-protocols.md`, `supply-chain-security-fuzzing.md`, `application-security-sbom-policy.md`, `container-iac-cloud-mobile-security.md` | Finite baseline has definition, lifecycle role, representative verified classes, selection, integration and automation possibilities; open-ended capability discovery explicitly remains non-exhaustive |
 
 ## Finite Definition of Done
 
@@ -62,6 +62,7 @@ The following expansion rows track whether at least one current, primary-source-
 | Vendor-specific embedded stacks | verified representative | `domain-expansion-2026-08.md` | ESP-IDF adds vendor-specific build/flash/monitor/debug/on-target-test evidence |
 | Supply-chain integrity / security posture / fuzzing | verified representative | `supply-chain-security-fuzzing.md` | SLSA 1.2 provenance/build levels, Sigstore/Cosign signing+attestation verification, OpenSSF Scorecard checks, OSS-Fuzz/CIFuzz, bounded LLM fuzz-target research |
 | Application security / SBOM / dependency / deployment policy | verified representative | `application-security-sbom-policy.md` | SPDX 3.0 + CycloneDX 1.7 SBOM, dependency review/alerts, secret scanning, CodeQL/SARIF SAST, ZAP DAST, Falco runtime detection, OPA/Gatekeeper admission policy |
+| Container/image + IaC + cloud posture + mobile AppSec | verified representative | `container-iac-cloud-mobile-security.md` | Trivy image/repository scanning, Checkov/Trivy IaC scanning, AWS Security Hub CSPM, OWASP MASVS/MASTG, bounded GitHub/GitLab AI security remediation |
 
 ## Still-open expansion frontier
 
@@ -71,6 +72,10 @@ These are deliberately not marked complete because the discovery universe is ope
 - additional game engines such as Godot and proprietary engines;
 - ML data validation, feature stores and additional orchestration/lifecycle systems;
 - MCU/FPGA/automotive and other vendor-specific embedded ecosystems;
-- additional SBOM generators/consumers, vulnerability databases, container/image scanners, cloud-security posture systems, mobile-specific application-security controls, and infrastructure-as-code scanners beyond the current representative baseline;
+- additional SBOM generators/consumers and vulnerability databases;
+- additional container/image scanners and cross-scanner result comparisons;
+- additional multi-cloud CSPM/CNAPP implementations and concrete mobile SAST/DAST/runtime tools mapped to MASVS/MASTG;
+- additional IaC scanners/policy engines and rule-coverage comparisons;
 - additional fuzzing systems, language-native fuzzers, profiling and deployment systems;
+- release/deployment systems, rollback verification and progressive-delivery baselines;
 - further evidence-backed AI security/fuzzing/release/deployment automation, with generated outputs kept behind deterministic verification gates.
