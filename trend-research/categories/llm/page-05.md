@@ -1,0 +1,53 @@
+# llm — page 05
+
+Query: `topic:llm created:2025-01-01..2026-08-19 stars:>1000`, GitHub search page 5/100 per page.
+
+- https://github.com/shiwenwen/hope-agent
+- https://github.com/sauravpanda/BrowserAI
+- https://github.com/Agent-RL/ReCall
+- https://github.com/fim-ai/fim-one
+- https://github.com/OpenOSINT/OpenOSINT
+- https://github.com/hyperfield/ai-file-sorter
+- https://github.com/vanloctech/youwee
+- https://github.com/yohey-w/multi-agent-shogun
+- https://github.com/six2dez/burp-ai-agent
+- https://github.com/SemiAnalysisAI/InferenceX
+- https://github.com/browserwing/browserwing
+- https://github.com/PolyArch/humanize
+- https://github.com/openonion/connectonion
+- https://github.com/Alisa0808/vox-director
+- https://github.com/ARahim3/mlx-tune
+- https://github.com/Houseofmvps/codesight
+- https://github.com/GradientHQ/parallax
+- https://github.com/Dryxio/auto-re-agent
+- https://github.com/wrtnlabs/autobe
+- https://github.com/google/adk-js
+- https://github.com/felixrieseberg/clippy
+- https://github.com/superloglabs/superlog
+- https://github.com/NeoLabHQ/context-engineering-kit
+- https://github.com/Orkas-AI/Orkas
+- https://github.com/Darkatse/TauriTavern
+- https://github.com/JoasASantos/NeuroSploit
+- https://github.com/ChaokunHong/MetaScreener
+- https://github.com/dyoshikawa/rulesync
+- https://github.com/AtomicBot-ai/Atomic-Chat
+- https://github.com/Dataojitori/nocturne_memory
+- https://github.com/study8677/repobrain
+- https://github.com/DEEIX-AI/DEEIX-Chat
+- https://github.com/HugeCatLab/ChatTutor
+- https://github.com/Team-Commonly/commonly
+- https://github.com/SakanaAI/text-to-lora
+- https://github.com/mohitagw15856/pm-claude-skills
+- https://github.com/SmythOS/sre
+- https://github.com/TencentCloudADP/youtu-graphrag
+- https://github.com/RUC-NLPIR/Search-o1
+- https://github.com/nduckmink/arkon
+- https://github.com/rudrankriyam/Foundation-Models-Framework-Lab
+- https://github.com/volcengine/SearchCLI
+- https://github.com/IAAR-Shanghai/Awesome-AI-Memory
+- https://github.com/Ricky-7-Yan/intelligent-audit-system
+- https://github.com/FutureUniant/WorkShadow
+- https://github.com/zjunlp/LightMem
+- https://github.com/wrtnlabs/agentica
+- https://github.com/juanjuandog/FinSight-AI
+- https://github.com/aiptimizer/TurboOCR
