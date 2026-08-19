@@ -29,6 +29,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
 - `release-deployment-progressive-delivery.md` — release/deployment evidence planes, Kubernetes rollout verification/rollback, GitHub environment gates, Argo Rollouts/Flagger progressive delivery, and bounded AI-assisted deployment operations.
 - `release-safety-flags-database-nonk8s.md` — feature flags/kill switches, database migration validation/recovery boundaries, and representative non-Kubernetes delivery/rollback semantics.
+- `store-and-fleet-release-safety.md` — App Store/Google Play phased and staged rollout semantics plus AWS IoT Jobs and Azure Device Update fleet rollout, abort and rollback boundaries.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
 - `ai-sdlc.md` — cross-vendor AI-SDLC baseline, coding-tool taxonomy, verified automation classes, selection criteria and non-exhaustive research frontier.
 - `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
