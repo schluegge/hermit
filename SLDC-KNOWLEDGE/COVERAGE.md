@@ -14,16 +14,16 @@ Status semantics are defined in `README.md`.
 | LSP / language servers | complete | `core-toolchain.md` | Protocol role and official Go language-server implementation documented |
 | Language-specific best practices | complete | `core-toolchain.md` | Evidence-backed principle for toolchain-native conventions plus verified Rust/Go examples |
 | Libraries / package ecosystems | complete | `core-toolchain.md` | Package/dependency role and Cargo ecosystem integration documented |
-| AI-SDLC | partial | `ai-sdlc.md` | Verified examples exist; cross-vendor lifecycle baseline still incomplete |
-| Tools that help AI code | partial | `ai-sdlc.md` | Verified GitHub capabilities exist; broader representative set pending |
-| AI DevOps | partial | `ai-sdlc.md` | Some automation stages verified; operations/deployment baseline incomplete |
-| AI CI/CD | partial | `ai-sdlc.md` | CI-linked review/runner evidence verified; generalized CI/CD model incomplete |
-| Memory | partial | `ai-sdlc.md` | Category defined; durable/episodic/semantic implementations need primary-source comparison |
-| Context management | partial | `ai-sdlc.md`, `agent-protocols.md` | MCP and repository-context mechanisms verified; general selection guidance incomplete |
+| AI-SDLC | partial | `ai-sdlc.md`, `ai-ops-memory-context.md` | Coding/review/CI/operations capabilities verified cross-vendor; requirements, architecture, security, release/deploy and maintenance breadth still incomplete |
+| Tools that help AI code | partial | `ai-sdlc.md` | Verified GitHub capabilities exist; broader representative tool taxonomy and selection matrix pending |
+| AI DevOps | complete | `ai-ops-memory-context.md` | Definition, operations role, AWS/Google implementations, selection, integrations and automation documented with product caveats |
+| AI CI/CD | complete | `ai-ops-memory-context.md` | Definition, GitHub/GitLab implementations, runner/workflow integration, selection and bounded automation documented |
+| Memory | complete | `ai-ops-memory-context.md` | Definition, LangGraph/AutoGen implementations, persistence scopes, selection, integrations and automation documented |
+| Context management | complete | `ai-ops-memory-context.md`, `agent-protocols.md` | Definition, LangChain/GitLab mechanisms, budget/provenance selection, integrations and automation documented |
 | MCP | complete | `agent-protocols.md` | Current official protocol role, primitives, transport direction, selection/integration documented |
 | A2A | complete | `agent-protocols.md` | Official v1.0 role, interoperability scope, selection/integration documented |
 | ACP | complete | `agent-protocols.md` | Official Zed role, editor-agent interoperability and selection/integration documented |
-| AI-driven automation | partial | `ai-sdlc.md` | Verified coding/review/test/lint/context automation; open-ended SDLC discovery remains ongoing |
+| AI-driven automation | partial | `ai-sdlc.md`, `ai-ops-memory-context.md` | Verified coding/review/test/lint/context/CI/operational investigation automation; open-ended SDLC discovery remains ongoing |
 
 ## Finite Definition of Done
 
