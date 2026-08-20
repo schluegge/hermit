@@ -46,6 +46,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `linux-desktop-updates.md` — Linux desktop update-channel baseline covering Flatpak, Snap and AppImage/AppImageUpdate, with explicit trust, refresh, downgrade/revert, data-state and automation boundaries.
 - `distribution-linux-package-management.md` — distribution-native Linux package-management baseline for APT/dpkg, DNF5/RPM, Zypper/Snapper/transactional-update, and Pacman, with explicit trust, transaction, downgrade, recovery, and automation boundaries.
 - `immutable-transactional-linux-os.md` — immutable/transactional Linux OS baseline for rpm-ostree, bootc bootable-container images and NixOS generations, with explicit activation, retention, rollback, mutable-state, trust and post-boot-health boundaries.
+- `ubuntu-core-update-governance.md` — Ubuntu Core 26 update/recovery baseline covering snap revisions, refresh control, validation sets, essential-snap remodel boot verification, component revert and recovery-mode boundaries.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
 - `ai-sdlc.md` — cross-vendor AI-SDLC baseline, coding-tool taxonomy, verified automation classes, selection criteria and non-exhaustive research frontier.
 - `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
