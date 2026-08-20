@@ -35,6 +35,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `supply-chain-security-fuzzing.md` — SLSA provenance/build guarantees, Sigstore/Cosign signing and attestations, OpenSSF Scorecard posture checks, OSS-Fuzz/CIFuzz, and bounded AI-assisted fuzzing evidence.
 - `language-native-fuzzing.md` — language/ecosystem-native fuzzing baseline for LLVM libFuzzer, Go native fuzzing, Rust `cargo-fuzz`, and JVM Jazzer, including regression preservation and platform/tool-lifecycle caveats.
 - `application-security-sbom-policy.md` — SPDX/CycloneDX SBOMs, dependency vulnerability/license policy, secret scanning, SAST, DAST, runtime security, and deployment policy as code.
+- `vulnerability-intelligence-sbom-consumers.md` — OSV vulnerability-data/schema semantics, OSV-Scanner direct CI/SBOM consumption, Dependency-Track v5 portfolio analysis/policy gating, and explicit inventory/matching/triage/authority boundaries.
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
 - `release-deployment-progressive-delivery.md` — release/deployment evidence planes, Kubernetes rollout verification/rollback, GitHub environment gates, Argo Rollouts/Flagger progressive delivery, and bounded AI-assisted deployment operations.
 - `release-safety-flags-database-nonk8s.md` — feature flags/kill switches, database migration validation/recovery boundaries, and representative non-Kubernetes delivery/rollback semantics.
