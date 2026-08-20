@@ -138,7 +138,80 @@ Source:
 - Source type: Microsoft official documentation; Early Preview.
 - ETW MCP Early Preview, last updated 2026-08-14; verified 2026-08-20: https://learn.microsoft.com/en-us/windows-hardware/test/wpt/etw-mcp-early-preview-july-2026
 
-## 7. Selection criteria for a general SDLC baseline
+## 7. Linux `perf` / `perf_events` baseline
+
+Linux exposes hardware/software performance monitoring through the kernel `perf_events` interface; the `perf` userspace tool is built on that interface. Current kernel documentation describes `perf` as an analysis tool for profiling systems and finding application bottlenecks, and notes that matching kernel and `perf` revisions gives more accurate subsystem-usage information.
+
+### Verified behavior
+
+- `perf_event_open()` creates file descriptors for performance events and supports both counting and sampled events.
+- Events can represent hardware counters, software counters, tracepoints, and other kernel-supported event classes depending on platform/kernel support.
+- `perf` can therefore provide CPU/PMU and kernel-aware evidence not available from a language-only profiler.
+- Access is security-sensitive: current kernel documentation warns that perf-event data can expose process/thread identifiers, paths, addresses, registers, and potentially sensitive process data.
+- Linux provides `CAP_PERFMON` as the least-privilege capability specifically for performance monitoring. Kernel documentation discourages relying on broad `CAP_SYS_ADMIN` when `CAP_PERFMON` suffices.
+- Unprivileged scope is additionally controlled by `perf_event_paranoid`; available system-wide/kernel-space visibility varies with that setting.
+
+### Baseline implication
+
+A failed or partial `perf` capture may be an authorization/scope problem rather than absence of the measured behavior. Preserve kernel version, `perf` version, event list, privilege/capability state, `perf_event_paranoid`, target scope, and symbolization context with the artifact.
+
+For automation, do not weaken host-wide security controls merely to make a profiler pass. Prefer the narrowest supported monitoring authority and document any privileged collector boundary.
+
+Sources:
+
+- Source type: Linux kernel official documentation.
+- Workload tracing / `perf` overview, verified 2026-08-20: https://docs.kernel.org/admin-guide/workload-tracing.html
+- Perf events and tool security, verified 2026-08-20: https://docs.kernel.org/admin-guide/perf-security.html
+- Source type: Linux man-pages project documentation.
+- `perf_event_open(2)`, current page verified 2026-08-20: https://man7.org/linux/man-pages/man2/perf_event_open.2.html
+
+## 8. Linux eBPF continuous profiling — Grafana Alloy + Pyroscope
+
+Grafana Pyroscope provides a current representative continuous-profiling implementation. Its official documentation defines continuous profiling as profiles collected over time with metadata, allowing historical/time-range comparison and correlation with metrics, logs, and traces.
+
+Grafana Alloy's `pyroscope.ebpf` component provides Linux eBPF CPU profiling without application source modification for supported workloads.
+
+### Verified behavior and limits
+
+- The eBPF collector runs on the Linux host and collects CPU stack samples for processes/containers.
+- Current setup documentation requires Linux kernel >= 4.9 because the collector uses `BPF_PROG_TYPE_PERF_EVENT`.
+- Current documentation requires privileged/root access for this collector path and host visibility such as the host PID namespace in containerized deployments.
+- The collector supports native and managed-language targets documented by Grafana, but support quality and symbolization requirements vary by runtime.
+- eBPF auto-profiling does **not** provide every profile type: the documented eBPF path is CPU-focused and does not replace SDK/runtime-native memory, lock/contention, allocation, or other specialized profilers.
+- Pyroscope stores/query-aggregates profiles over selected time ranges and supports label/time comparisons, enabling before/after and production-history investigations.
+
+### Selection and integration criteria
+
+Continuous profiling is appropriate when historical production evidence, fleet-wide hot-path detection, or correlation with other observability signals is needed. Prefer targeted/on-demand profilers when privileged host access is unacceptable, unsupported runtimes/profile types are required, or the measurement question needs precise event tracing rather than sampling.
+
+Do not treat “eBPF” as synonymous with “zero overhead” or “no operational risk.” Collector privilege, sample rate, symbolization, supported languages, kernel compatibility, and the measured overhead on the target workload remain explicit acceptance criteria.
+
+Sources:
+
+- Source type: Grafana official Pyroscope documentation.
+- Pyroscope overview, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/
+- Continuous-profiling introduction, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/introduction/
+- Client/instrumentation selection, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/configure-client/
+- eBPF profiling benefits/limits, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/configure-client/grafana-alloy/ebpf/
+- Linux eBPF setup/kernel/privilege requirements, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/configure-client/grafana-alloy/ebpf/setup-linux/
+- Profile-type matrix, verified 2026-08-20: https://grafana.com/docs/pyroscope/latest/configure-client/profile-types/
+
+## 9. AI-assisted continuous-profile interpretation — Grafana Flame graph AI
+
+Grafana's current documentation describes **Flame graph AI** as LLM-assisted interpretation of Pyroscope flame graphs. It can explain likely bottlenecks/root causes and recommend candidate fixes, including analysis of diff flame graphs comparing time ranges or label sets.
+
+### Authority boundary
+
+The feature is an interpretation layer over profiling evidence, not the evidence itself. Its output should be treated as a hypothesis/candidate-remediation generator. Before accepting a patch or release decision, verify the claimed hotspot and the effect of the candidate change against the underlying profiles and a repeated measurement/benchmark.
+
+The feature also has deployment prerequisites that differ between Grafana Cloud and Grafana open source; do not claim universal availability merely because Pyroscope data exists.
+
+Source:
+
+- Source type: Grafana official documentation.
+- Flame graph AI, verified 2026-08-20: https://grafana.com/docs/grafana/latest/visualizations/simplified-exploration/profiles/investigate/flame-graph-ai/
+
+## 10. Selection criteria for a general SDLC baseline
 
 Before selecting or automating a profiler/tracer, document:
 
@@ -149,9 +222,11 @@ Before selecting or automating a profiler/tracer, document:
 5. **Representativeness:** exact workload, build, flags, environment and hardware represented by the recording.
 6. **Symbols/context:** whether stacks can be symbolized and mappings preserved.
 7. **Automation surface:** CLI/API/query format, deterministic exit/threshold behavior and artifact retention.
-8. **Privacy/security:** traces may contain process names, paths, payload-adjacent metadata or other sensitive environment information; treat trace artifacts as potentially sensitive until inspected.
+8. **Privacy/security:** traces/profiles may contain process names, paths, addresses, stack context or other sensitive environment information; treat artifacts as potentially sensitive until inspected.
+9. **Authority/privilege:** required host/kernel capabilities, container namespace access, and whether least-privilege collection is possible.
+10. **Historical need:** whether the question requires continuous historical profiles or a targeted capture is sufficient.
 
-## 8. Integration and automation pattern
+## 11. Integration and automation pattern
 
 A bounded automated performance loop is:
 
@@ -168,19 +243,22 @@ For regression gates:
 - repeat measurements when variance can change the decision;
 - separate “performance improved in this measured scenario” from a universal performance claim.
 
-## 9. Contradictions/non-equivalences retained
+## 12. Contradictions/non-equivalences retained
 
 - Profiling and tracing are related but not interchangeable.
 - Runtime-native profiles do not necessarily expose OS/hardware causal context.
+- Linux `perf`/PMU evidence and eBPF continuous profiles overlap but are not equivalent: `perf` can expose explicit counter/event experiments, while an eBPF continuous profiler is optimized for ongoing sampled-stack collection.
 - System traces can provide broad context but may cost much more data than metrics or samples.
-- “Production-safe” profiling still has non-zero/configuration-dependent overhead that should be measured.
+- “Production-safe” or “low-overhead” profiling still has non-zero/configuration-dependent overhead that should be measured.
+- Continuous profiling adds historical/time metadata but does not automatically add deterministic regression thresholds or causal proof.
 - A representative profile can guide optimization; an unrepresentative profile can mislead it.
-- AI-assisted trace analysis can accelerate investigation but remains model-generated interpretation and must be checked against source evidence.
+- Privileged profiling expands the trust/security surface; performance observability is not permission-free.
+- AI-assisted trace/profile analysis can accelerate investigation but remains model-generated interpretation and must be checked against source evidence.
 
-## 10. Unresolved / open discovery
+## 13. Unresolved / open discovery
 
-- cross-platform continuous profiling systems and independently measured overhead/accuracy comparisons;
-- Linux `perf`/eBPF and macOS Instruments as dedicated general-system baselines;
+- macOS Instruments as a dedicated general-system baseline;
 - GPU/vendor-native profilers beyond existing Android/Unity/PyTorch domain evidence;
+- independent cross-tool overhead/accuracy comparisons for continuous profilers;
 - statistical methodology for noisy performance CI and hardware-normalized thresholds;
 - direct evidence for autonomous AI performance changes that close the loop from profile to patch to repeated benchmark while preserving an explicit approval/authority boundary.
