@@ -56,8 +56,8 @@ The following expansion rows track whether at least one current, primary-source-
 | Apple / iOS | verified representative | `domain-expansion-2026-08.md` | Xcode devices/Simulator, debugger/Instruments, Swift Testing/XCTest, performance testing, Xcode Cloud |
 | Embedded / HIL | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | Zephyr west/Twister plus ESP-IDF build/flash/monitor/on-target testing |
 | Data / ML | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | PyTorch profiling plus MLflow experiment tracking, model registry and evaluation |
-| Games | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md` | Unity testing/profiler plus Unreal automation testing/build automation |
-| Additional game engines | verified representative | `domain-expansion-2026-08.md` | Unreal Engine 5.8 adds a second independently documented engine implementation |
+| Games | verified representative | `language-domain-matrix.md`, `domain-expansion-2026-08.md`, `godot-engine-baseline.md` | Unity testing/profiler, Unreal automation testing/build automation, and Godot CLI/headless/debug/profile/export/testing baseline |
+| Additional game engines | verified representative | `domain-expansion-2026-08.md`, `godot-engine-baseline.md` | Unreal Engine 5.8 plus Godot 4.7.x provide independently documented additional engine implementations |
 | Additional ML lifecycle systems | verified representative | `domain-expansion-2026-08.md` | MLflow 3.14.0 adds tracking, registry, lineage and evaluation lifecycle evidence |
 | Vendor-specific embedded stacks | verified representative | `domain-expansion-2026-08.md` | ESP-IDF adds vendor-specific build/flash/monitor/debug/on-target-test evidence |
 | Performance profiling / tracing / diagnostics | verified representative | `performance-profiling-tracing.md`, `performance-platform-ci.md`, `gpu-vendor-profiling.md` | Perfetto, Go pprof/PGO, JDK 26 JFR, Windows WPR/WPA/ETW, Linux `perf`/eBPF continuous profiling, Apple Instruments/`xctrace`, NVIDIA Nsight Systems/Compute, AMD ROCprofiler-SDK/`rocprofv3` + ROCm Compute Profiler, Intel VTune GPU analysis, repeated/statistical performance-CI evidence, and bounded AI-assisted interpretation |
@@ -78,7 +78,7 @@ The following expansion rows track whether at least one current, primary-source-
 These are deliberately not marked complete because the discovery universe is open:
 
 - additional Apple command-line build/signing/distribution detail beyond the current representative baseline;
-- additional game engines such as Godot and proprietary engines;
+- additional proprietary/closed game engines and deeper Godot platform/export/testing evidence where authoritative sources are available;
 - ML data validation, feature stores and additional orchestration/lifecycle systems;
 - MCU/FPGA/automotive and other vendor-specific embedded ecosystems;
 - additional SBOM generators/consumers and vulnerability databases;

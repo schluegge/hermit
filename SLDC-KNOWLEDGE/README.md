@@ -24,6 +24,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `core-toolchain.md` — language-agnostic baseline for debugging, linting/static analysis, formatting, testing, runners/build execution, LSP, best practices, and package/library ecosystems.
 - `language-domain-matrix.md` — verified implementations for JS/TS/Node, JVM/Java, C/C++, .NET/C#, Android, embedded/HIL, data/ML and games.
 - `domain-expansion-2026-08.md` — additional primary-source-backed domain baselines for Apple/iOS/Xcode, Unreal Engine, MLflow and ESP-IDF.
+- `godot-engine-baseline.md` — Godot 4.7.x game-engine baseline covering CLI/headless execution and export, debugging, profiling, GDScript typing/warnings, test-framework boundaries and GUT 4.7.x-compatible CI testing.
 - `performance-profiling-tracing.md` — language-agnostic profiling/tracing baseline, Perfetto, Go pprof/PGO, JFR, Windows ETW/WPR/WPA, Linux `perf`/eBPF continuous profiling and bounded AI-assisted interpretation.
 - `performance-platform-ci.md` — Apple Instruments/`xctrace`, NVIDIA Nsight Systems/Compute, and reproducible/statistical performance-CI evidence and gating boundaries.
 - `gpu-vendor-profiling.md` — current AMD ROCprofiler-SDK/`rocprofv3` and ROCm Compute Profiler, Intel VTune GPU analysis, Intel GPA EOL boundary, and cross-vendor metric-mapping rules.
