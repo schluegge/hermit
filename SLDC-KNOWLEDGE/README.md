@@ -28,6 +28,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `performance-platform-ci.md` — Apple Instruments/`xctrace`, NVIDIA Nsight Systems/Compute, and reproducible/statistical performance-CI evidence and gating boundaries.
 - `gpu-vendor-profiling.md` — current AMD ROCprofiler-SDK/`rocprofv3` and ROCm Compute Profiler, Intel VTune GPU analysis, Intel GPA EOL boundary, and cross-vendor metric-mapping rules.
 - `supply-chain-security-fuzzing.md` — SLSA provenance/build guarantees, Sigstore/Cosign signing and attestations, OpenSSF Scorecard posture checks, OSS-Fuzz/CIFuzz, and bounded AI-assisted fuzzing evidence.
+- `language-native-fuzzing.md` — language/ecosystem-native fuzzing baseline for LLVM libFuzzer, Go native fuzzing, Rust `cargo-fuzz`, and JVM Jazzer, including regression preservation and platform/tool-lifecycle caveats.
 - `application-security-sbom-policy.md` — SPDX/CycloneDX SBOMs, dependency vulnerability/license policy, secret scanning, SAST, DAST, runtime security, and deployment policy as code.
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
 - `release-deployment-progressive-delivery.md` — release/deployment evidence planes, Kubernetes rollout verification/rollback, GitHub environment gates, Argo Rollouts/Flagger progressive delivery, and bounded AI-assisted deployment operations.
