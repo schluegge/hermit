@@ -119,55 +119,128 @@ This is direct evidence against treating the label "online DDL" as synonymous wi
 - Online DDL operations matrix: https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-operations.html
 - Online DDL failure conditions: https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-failure-conditions.html
 
-## 6. Selection criteria
+## 6. SQL Server online and resumable DDL primitives
+
+Current Microsoft documentation provides operation-specific online and resumable mechanisms for SQL Server, Azure SQL Database, Azure SQL Managed Instance, and related SQL services. These mechanisms reduce or bound maintenance disruption for supported operations; they do not make arbitrary `ALTER TABLE` statements nonblocking.
+
+### Online index operations
+
+Microsoft documents `ONLINE = ON` for supported index create/rebuild/drop operations and explicitly lists unsupported index types and other restrictions. Even when an index operation is online:
+
+- the underlying table cannot be altered, truncated, or dropped while the operation is in progress;
+- additional temporary/data-file space and version-store capacity can be required;
+- deadlocks or uniqueness conflicts can still make the operation fail;
+- some operations and data types cannot be performed online;
+- online-index availability depends on SQL Server edition/version for on-premises deployments.
+
+`WAIT_AT_LOW_PRIORITY` provides a bounded policy for lock acquisition during supported online index operations. Depending on the configured `ABORT_AFTER_WAIT`, the operation can continue waiting, abort itself, or terminate blocking user transactions. Therefore this setting is an explicit availability/authority decision and not merely a performance flag.
+
+### Resumable index operations
+
+For supported versions, `RESUMABLE = ON` together with `ONLINE = ON` allows index create/rebuild to pause and resume, including recovery after interruption or failover. Microsoft documents that a paused operation still consumes storage and requires both old and new index structures to be maintained by DML; update-heavy workloads can therefore degrade while the operation is paused.
+
+### Online/resumable table constraints and online alter-column
+
+Current `ALTER TABLE` documentation shows `ALTER COLUMN ... WITH (ONLINE = ON)` for supported SQL Server/Azure SQL versions. SQL Server 2022 and later also support resumable online addition of `PRIMARY KEY` and `UNIQUE` constraints with `RESUMABLE = ON`; Microsoft explicitly states that this resumable constraint capability does **not** cover foreign keys.
+
+Generic `ALTER TABLE` still acquires schema-modification (`Sch-M`) locks for changes that require them. Online index operations may need a short `Sch-M` lock at completion. This is direct evidence that SQL Server "online" is operation-specific and can still include critical lock windows.
+
+### Sources
+
+- Source type: official Microsoft documentation.
+- Guidelines for online index operations, current SQL Server documentation, verified 2026-08-20: https://learn.microsoft.com/en-us/sql/relational-databases/indexes/guidelines-for-online-index-operations?view=sql-server-ver17
+- `ALTER TABLE` lock/online/resumable semantics, verified 2026-08-20: https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-table-transact-sql?view=sql-server-ver17
+- Resumable add table constraints, SQL Server 2022+ scope, verified 2026-08-20: https://learn.microsoft.com/en-us/sql/relational-databases/security/resumable-add-table-constraints?view=sql-server-ver17
+
+## 7. Oracle AI Database 26 online table redefinition
+
+Oracle AI Database 26 documents `DBMS_REDEFINITION` as an online table-redefinition mechanism for changing table structure and storage while preserving user access for most of the operation.
+
+### Online redefinition workflow
+
+The current administrator documentation exposes two main forms:
+
+- `REDEF_TABLE` for supported single-step storage-property changes;
+- the multi-procedure workflow using `CAN_REDEF_TABLE`, `START_REDEF_TABLE`, optional `SYNC_INTERIM_TABLE`, dependent-object handling, and `FINISH_REDEF_TABLE` for broader transformations.
+
+During multi-step online redefinition, changes are synchronized between the original and interim table. Oracle documents that the original table is locked exclusively only for a small window near `FINISH_REDEF_TABLE`; the `dml_lock_timeout` parameter can bound how long the finish step waits for required locks before failing.
+
+### Monitoring, restart and rollback
+
+Oracle 26 exposes `V$ONLINE_REDEF` and `DBA_REDEFINITION_STATUS` for progress/status inspection, including restartability and errors. The documentation states that failed online redefinition can often be corrected and restarted from the last stopped point.
+
+Oracle also documents an optional post-redefinition rollback path. When `enable_rollback => TRUE` is set during `START_REDEF_TABLE`, the system retains the interim structures needed to return the table to its original definition while preserving subsequent DML changes. This capability is opt-in; the default is false. It is not evidence that arbitrary application-side semantic changes, external side effects, or every schema transformation are automatically reversible.
+
+### Limits and selection implications
+
+- Candidate eligibility and redefinition method must be checked rather than assumed.
+- Dependent objects and materialized views have explicit handling requirements and restrictions.
+- Additional storage is needed for interim structures and synchronization.
+- A short exclusive lock window still exists at finalization.
+- Rollback semantics are specific to online table redefinition and do not replace application compatibility tests or backups/recovery planning.
+
+### Sources
+
+- Source type: official Oracle AI Database 26 documentation.
+- Managing tables / online redefinition / rollback, verified 2026-08-20: https://docs.oracle.com/en/database/oracle/oracle-database/26/admin/managing-tables.html
+- `DBMS_REDEFINITION` package reference, verified 2026-08-20: https://docs.oracle.com/en/database/oracle/oracle-database/26/arpls/DBMS_REDEFINITION.html
+- `DBA_REDEFINITION_STATUS`, verified 2026-08-20: https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/DBA_REDEFINITION_STATUS.html
+- `V$ONLINE_REDEF`, verified 2026-08-20: https://docs.oracle.com/en/database/oracle/oracle-database/26/refrn/V-ONLINE_REDEF.html
+
+## 8. Selection criteria
 
 For a zero-downtime database-evolution strategy, select and validate against:
 
 1. application versions that may overlap during rollout;
 2. read/write compatibility of each intermediate schema state;
-3. target DBMS/version and exact DDL concurrency semantics;
+3. target DBMS/version/edition and exact DDL concurrency semantics;
 4. table size, write rate, replication/topology and lock-time sensitivity;
-5. whether DDL is transactional on the target engine/operation;
+5. whether DDL is transactional or restartable on the target engine/operation;
 6. data-backfill cost, batching, idempotency and restart behavior;
 7. constraint/index creation and validation behavior;
 8. migration-tool history/validation/drift capabilities;
 9. destructive cleanup timing and proof that old code paths are gone;
-10. recovery strategy: forward fix, application rollback, snapshot/restore, or separately tested undo where safe.
+10. recovery strategy: forward fix, application rollback, engine-specific resumable/rollback mechanism, snapshot/restore, or separately tested undo where safe.
 
 Do not select an approach merely because a migration framework supports the target database. Framework compatibility and operation-level availability are different claims.
 
-## 7. Integration and automation possibilities
+## 9. Integration and automation possibilities
 
 A bounded automated pipeline can:
 
 1. classify migrations as additive, behavioral/backfill, or destructive;
 2. reject same-release expand+contract when the compatibility policy forbids it;
-3. inspect target-engine/version support for requested online-DDL options;
+3. inspect target-engine/version/edition support for requested online/resumable-DDL options;
 4. run migrations against a production-like dataset/topology;
 5. test old-app/new-schema and new-app/intermediate-schema compatibility where rolling overlap is possible;
 6. run backfills in resumable batches with measured progress and error counts;
-7. verify new indexes/constraints are valid before switching behavior;
-8. gate contract/destructive cleanup on evidence that old application versions and old read/write paths are gone;
-9. preserve migration ID/checksum, engine/version, DDL algorithm/lock options, execution time, lock/wait evidence, validation results, backfill progress and application-compatibility test results.
+7. verify new indexes/constraints/redefinitions are valid before switching behavior;
+8. capture engine-specific operation status such as SQL Server resumable-index state or Oracle redefinition status;
+9. gate contract/destructive cleanup on evidence that old application versions and old read/write paths are gone;
+10. preserve migration ID/checksum, engine/version/edition, DDL algorithm/lock/resumable options, execution time, lock/wait evidence, validation results, backfill progress and application-compatibility test results.
 
-AI can assist with migration-plan generation, change classification, SQL review, test generation, log interpretation, and candidate remediation. Generated output remains untrusted until the deterministic database and application gates above succeed.
+AI can assist with migration-plan generation, change classification, SQL review, test generation, log/status interpretation, and candidate remediation. Generated output remains untrusted until the deterministic database and application gates above succeed.
 
-## 8. Contradiction and deduplication pass
+## 10. Contradiction and deduplication pass
 
 - Generic Flyway migrate/validate/repair/undo semantics already exist in `release-safety-flags-database-nonk8s.md`; they are not duplicated here.
 - Flyway and GitLab support the expand/contract compatibility principle, but neither makes every DDL operation zero-impact.
 - PostgreSQL's `CREATE INDEX CONCURRENTLY` reduces write blocking but can leave invalid indexes after failure and performs extra work.
 - PostgreSQL `NOT VALID` defers validation; it does not mean the constraint is fully validated at creation time.
 - MySQL's "online DDL" is operation-specific; some operations rebuild tables or disallow concurrent DML.
-- Transactional behavior cannot be generalized across engines. The evidence explicitly distinguishes PostgreSQL/SQL Server/Oracle examples from MySQL/MariaDB DDL behavior in Flyway's rollout guidance.
-- "Zero downtime" is therefore treated as an end-to-end compatibility/availability objective, not a boolean capability bit on a migration tool.
+- SQL Server online/resumable support is operation-, version-, and sometimes edition-specific; supported operations can still require lock windows, space and version-store resources, and resumable pauses can affect DML throughput.
+- Oracle `DBMS_REDEFINITION` allows DML for most of the workflow but still requires a short exclusive-lock window at finish; optional rollback is not a universal rollback mechanism for application state.
+- Transactional/restart/rollback behavior cannot be generalized across engines.
+- "Zero downtime" is therefore treated as an end-to-end compatibility/availability objective, not a boolean capability bit on a migration tool or DBMS.
 
-## 9. Residual unresolved frontier
+No primary-source contradiction was found for the claims written in this revision. Apparent differences between engines are retained as scoped capabilities rather than normalized into a false cross-engine equivalence.
+
+## 11. Residual unresolved frontier
 
 The following remain unresolved or only partially represented:
 
-- SQL Server- and Oracle-specific online-DDL primitives verified directly from their current primary documentation;
 - large-scale backfill frameworks and change-data-capture-assisted migrations;
 - quantitative lock-time/resource budgets and automated abort thresholds across engines;
-- replication/failover interactions during schema evolution;
+- replication/failover interactions during schema evolution beyond the restart/failover behavior explicitly documented for individual operations;
+- additional engines such as Db2 and distributed/NewSQL systems;
 - direct AI systems with authority to execute production database migrations and independently evidenced safety boundaries.
