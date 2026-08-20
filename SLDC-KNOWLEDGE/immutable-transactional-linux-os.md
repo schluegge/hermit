@@ -156,17 +156,67 @@ Automation can use a staged sequence such as:
 
 The official NixOS manual warns that switching back and forth between channels is generally possible, but a newer Nix version can upgrade Nix's database schema in a way that is not easily undone. Therefore generation rollback must not be advertised as a universal reversal of every underlying state/schema transition.
 
+## 4. openSUSE MicroOS / transactional-update + health-checker
+
+### Definition and SDLC role
+
+openSUSE `transactional-update` applies operating-system changes to a new filesystem snapshot while the currently running system remains unchanged. The upstream project describes the operation as atomic at the update layer: if the update transaction fails, the candidate snapshot is discarded rather than partially applied. The current upstream NEWS file lists `transactional-update` 6.1.3 dated 2026-07-20.
+
+The separate openSUSE `health-checker` adds a post-boot validation plane. It runs as a systemd service during boot and calls packaged or administrator-supplied plugins that test individual services or conditions. This is materially different from an updater that merely stages a prior snapshot: the candidate system can be rejected after reboot based on explicit health checks.
+
+### Verified lifecycle
+
+- `transactional-update` creates/modifies a candidate snapshot rather than mutating the currently booted root.
+- Only a successful transaction becomes the default candidate for a future boot; failed transactions can be discarded.
+- On the next boot, `health-checker` executes its plugins after the services declared in its systemd ordering dependencies.
+- Plugin exit status is the health signal: success is `0`; a failed check returns `1`.
+- On Boot Loader Specification (BLS) paths such as systemd-boot or grub2-bls, new snapshot boot entries carry a retry counter. The health-checker documentation states `/etc/kernel/tries` defaults to 3. A successful health check leads to `systemd-bless-boot`; a failed check causes reboot into the next available snapshot, thereby rejecting the bad candidate at boot.
+- On the documented legacy-GRUB path, a failed check on a newly booted snapshot triggers rollback to the last known working Btrfs root snapshot. If a snapshot had previously booted successfully, health-checker retries a reboot once; repeated failure then stops checked services and leaves the system for administrator intervention instead of looping indefinitely.
+
+### Selection criteria
+
+Prefer this pattern when the operating system already uses openSUSE/SUSE transactional snapshots and the rollout policy requires a machine-local, deterministic post-boot acceptance gate. It is especially relevant when "transaction completed" is not sufficient evidence and a defined set of services/conditions must be healthy before the new snapshot is blessed.
+
+Do not generalize this mechanism to arbitrary application rollback. The health decision is only as strong as the configured plugins and bootloader/snapshot integration, and rollback targets the system snapshot rather than all mutable or external state.
+
+### Integration and automation
+
+A deterministic pipeline can:
+
+1. stage OS updates with `transactional-update`;
+2. ensure the candidate snapshot is created successfully;
+3. reboot through controlled orchestration;
+4. run `health-checker` plugins after their required services start;
+5. bless the boot only when checks succeed on BLS-based paths;
+6. reject/roll back the candidate snapshot when the documented health path fails;
+7. preserve logs and snapshot identity for incident analysis;
+8. stop automatic retry after the documented failure boundary and hand control to an operator.
+
+This is a verified example of **post-boot health-driven automatic OS rollback/rejection**. AI can assist with log correlation, plugin-generation proposals, or incident summaries, but no inspected primary source grants an AI system authority to redefine health policy, bypass a failed plugin, bless a bad boot, or delete recovery snapshots.
+
+### Persistent-state and recovery boundary
+
+The transactional-update upstream documentation explicitly requires separation of application/configuration/user state and notes that `/var` is outside the update transaction in ways that prevent it from being treated as part of the atomic root update. SUSE/openSUSE migration guidance also warns that distribution rollback is not equivalent to rollback of third-party application data.
+
+Therefore:
+
+- candidate-root rollback does not imply database rollback;
+- plugin success does not prove business-level SLOs unless those SLOs are actually encoded in the checks;
+- a previously working root snapshot is not a backup of external services or mutable data;
+- bootloader-specific semantics matter: BLS automatic boot assessment and legacy-GRUB state-file behavior are distinct mechanisms and must not be collapsed into one generic algorithm.
+
 ## Cross-model comparison
 
-| Plane | rpm-ostree | bootc | NixOS |
-|---|---|---|---|
-| Primary OS update identity | OSTree/rpm-ostree deployment | OCI bootable image | NixOS system generation / closure |
-| Default activation pattern | staged offline; reboot | image fetch/stage then reboot/apply | build/test/boot/switch modes |
-| Previous-system recovery | retained deployment / `rollback` | previous bootable OS image | retained generation / bootloader / `--rollback` |
-| Persistent state outside OS payload | yes; notably mutable state is not equivalent to deployment | `/etc` and `/var` generally persist | mutable application/data state is not represented by system generation alone |
-| History retention affects rollback | yes | yes, previous image availability matters | yes; deleting old generations removes rollback capability |
-| Package-level mutation model | hybrid layering/overrides | image rebuild is the preferred OS mutation model | declarative package/system composition |
-| Complete functional-health proof | no | no | no |
+| Plane | rpm-ostree | bootc | NixOS | openSUSE MicroOS / transactional-update |
+|---|---|---|---|---|
+| Primary OS update identity | OSTree/rpm-ostree deployment | OCI bootable image | NixOS system generation / closure | transactional filesystem snapshot |
+| Default activation pattern | staged offline; reboot | image fetch/stage then reboot/apply | build/test/boot/switch modes | build candidate snapshot; boot later |
+| Previous-system recovery | retained deployment / `rollback` | previous bootable OS image | retained generation / bootloader / `--rollback` | retained working snapshot / boot selection or rollback |
+| Post-boot automatic health rejection | not established here as a native baseline property | not established here as a native baseline property | not established here as a native baseline property | verified via health-checker plugins + bootloader/snapshot integration |
+| Persistent state outside OS payload | yes; notably mutable state is not equivalent to deployment | `/etc` and `/var` generally persist | mutable application/data state is not represented by system generation alone | mutable/application state is separate from atomic root update |
+| History retention affects rollback | yes | yes, previous image availability matters | yes; deleting old generations removes rollback capability | yes; rollback depends on retained usable snapshots/boot entries |
+| Package-level mutation model | hybrid layering/overrides | image rebuild is the preferred OS mutation model | declarative package/system composition | package changes are applied inside candidate snapshot |
+| Complete functional-health proof | no | no | no | no; only configured health checks are proven |
 
 ## Baseline selection rules
 
@@ -177,7 +227,8 @@ The official NixOS manual warns that switching back and forth between channels i
 5. Define retention policy from the required rollback window; garbage collection/history pruning can destroy recovery capability.
 6. Model mutable state separately. OS rollback cannot be assumed to downgrade databases, `/var` data, remote APIs, cloud resources or firmware.
 7. Keep supply-chain trust separate from transactional activation. A transaction can apply an untrusted artifact consistently.
-8. Keep transactional consistency separate from availability. A valid new generation/image can still fail to boot on specific hardware or fail application-level SLOs.
+8. Keep transactional consistency separate from availability. A valid new generation/image/snapshot can still fail to boot on specific hardware or fail application-level SLOs.
+9. When automatic health rejection exists, audit the actual health checks and their systemd/bootloader ordering; the rollback mechanism cannot compensate for a missing or weak health signal.
 
 ## AI-driven automation opportunities
 
@@ -187,21 +238,24 @@ Evidence-supported underlying mechanisms allow AI-assisted workflows around:
 - selecting candidate tests based on changed components;
 - interpreting deployment/status output;
 - correlating boot/service failures with an update;
-- proposing a rollback or retained-generation choice;
+- proposing a rollback or retained-generation/snapshot choice;
 - generating human-reviewable rollout plans and recovery commands;
-- checking whether retention/recovery prerequisites appear present.
+- checking whether retention/recovery prerequisites appear present;
+- proposing health-check plugins or additional checks for operator review;
+- summarizing why a candidate snapshot was rejected.
 
-The production authority boundary remains deterministic: AI output should not by itself authorize OS promotion, deletion of rollback generations, forced reboot, trust-policy bypass, or recovery completion. Those actions require explicit policy plus inspected deployment identity and health evidence.
+The production authority boundary remains deterministic: AI output should not by itself authorize OS promotion, delete rollback generations/snapshots, force reboot, bypass trust or health policy, bless a failed boot, or declare recovery complete. Those actions require explicit policy plus inspected deployment identity and health evidence.
 
 ## Contradictions intentionally preserved
 
-- rpm-ostree rollback ≠ bootc previous-image rollback ≠ NixOS generation rollback.
+- rpm-ostree rollback ≠ bootc previous-image rollback ≠ NixOS generation rollback ≠ openSUSE snapshot rollback/rejection.
 - Transactional/atomic activation ≠ application transactionality.
 - Previous OS content ≠ previous database/user-data state.
 - OCI image ≠ complete cryptographic trust chain.
 - Declarative configuration ≠ guaranteed runtime correctness.
-- Boot success ≠ service health ≠ SLO satisfaction.
+- Transaction success ≠ boot success ≠ configured health-check success ≠ SLO satisfaction.
 - Retained history ≠ backup.
+- BLS automatic boot assessment ≠ legacy-GRUB health-check state-file behavior.
 - Garbage collection is operationally relevant because it can remove rollback material.
 
 ## Unresolved / open research
@@ -209,9 +263,10 @@ The production authority boundary remains deterministic: AI output should not by
 - exact current trust-policy defaults and signed-image enforcement across Fedora/CentOS bootc distributions;
 - rpm-ostree/bootc behavior under storage exhaustion, interrupted fetch/finalization, bootloader failure and multi-disk layouts;
 - NixOS rollback behavior for stateful service migrations beyond the system generation itself;
-- additional transactional/immutable systems such as openSUSE transactional-update/MicroOS, Fedora Atomic variants beyond their shared mechanisms, Ubuntu Core and other image-based OSes;
+- additional transactional/immutable systems and distributions beyond the verified rpm-ostree, bootc, NixOS, openSUSE transactional-update/MicroOS, and separately documented Ubuntu Core representatives;
 - independently measured fleet-scale failure/recovery characteristics;
-- post-boot health-driven automatic rollback implementations with authoritative current evidence;
+- cross-distribution post-boot health-driven automatic rollback/rejection semantics beyond the verified openSUSE health-checker implementation;
+- quantitative policy for which service/application/SLO checks are sufficient before blessing an OS update;
 - AI systems with explicit, documented authority over production OS update promotion or rollback.
 
 ## Sources
@@ -234,3 +289,12 @@ All sources verified 2026-08-20.
 - NixOS Manual, stable — official project documentation: https://nixos.org/manual/nixos/stable/
 - How Nix Works / rollbacks — official project documentation: https://nixos.org/guides/how-nix-works/
 - `nixos-rebuild` — Official NixOS Wiki: https://wiki.nixos.org/wiki/Nixos-rebuild
+
+### openSUSE transactional-update / MicroOS health rollback
+
+- `transactional-update` upstream README — maintainer repository: https://github.com/openSUSE/transactional-update
+- `transactional-update` NEWS — maintainer repository; current listed release 6.1.3 dated 2026-07-20: https://github.com/openSUSE/transactional-update/blob/master/NEWS
+- `health-checker` upstream README — maintainer repository; BLS and legacy-GRUB post-boot behavior: https://github.com/openSUSE/health-checker
+- SUSE Linux Enterprise Micro 5.5 Administration Guide, Health checker — vendor documentation: https://documentation.suse.com/smart/micro-clouds/html/SLE-Micro-5.5-admin/index.html
+- openSUSE transactional-update packaging requirements — project documentation: https://en.opensuse.org/openSUSE:Packaging_Requirements_for_Atomic_and_Image_Update
+- openSUSE Leap Micro system-upgrade guidance — project documentation; rollback data boundary: https://en.opensuse.org/SDB:System_upgrade_of_LeapMicro
