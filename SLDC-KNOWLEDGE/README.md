@@ -41,6 +41,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `zero-downtime-database-evolution.md` — expand/contract schema evolution, mixed-version compatibility, PostgreSQL 18 concurrent/deferrable validation primitives, MySQL 8.4 online-DDL boundaries, and deterministic migration gates.
 - `database-backfill-cdc.md` — long-running data backfills, CDC-assisted convergence, snapshot/stream overlap, validation and cutover boundaries.
 - `store-and-fleet-release-safety.md` — App Store/Google Play phased and staged rollout semantics plus AWS IoT Jobs and Azure Device Update fleet rollout, abort and rollback boundaries.
+- `firmware-anti-rollback-automotive.md` — firmware security-counter/downgrade protection, MCUboot candidate-image fallback, ESP-IDF eFuse anti-rollback, and Uptane automotive multi-ECU update-security boundaries.
 - `slo-error-budget-release-gates.md` — SLI/SLO/error-budget policy, OpenSLO SLO-as-code, Grafana/Datadog reliability signals, Harness SLO-driven deployment governance/rollback, and bounded AI SRE integration.
 - `desktop-update-security.md` — desktop updater trust/signing/freshness, Windows MSIX/App Installer update+downgrade semantics, Sparkle 2 signing/update boundaries, and explicit rollback caveats.
 - `linux-desktop-updates.md` — Linux desktop update-channel baseline covering Flatpak, Snap and AppImage/AppImageUpdate, with explicit trust, refresh, downgrade/revert, data-state and automation boundaries.
