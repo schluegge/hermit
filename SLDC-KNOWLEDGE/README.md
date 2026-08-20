@@ -29,6 +29,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
 - `release-deployment-progressive-delivery.md` — release/deployment evidence planes, Kubernetes rollout verification/rollback, GitHub environment gates, Argo Rollouts/Flagger progressive delivery, and bounded AI-assisted deployment operations.
 - `release-safety-flags-database-nonk8s.md` — feature flags/kill switches, database migration validation/recovery boundaries, and representative non-Kubernetes delivery/rollback semantics.
+- `zero-downtime-database-evolution.md` — expand/contract schema evolution, mixed-version compatibility, PostgreSQL 18 concurrent/deferrable validation primitives, MySQL 8.4 online-DDL boundaries, and deterministic migration gates.
 - `store-and-fleet-release-safety.md` — App Store/Google Play phased and staged rollout semantics plus AWS IoT Jobs and Azure Device Update fleet rollout, abort and rollback boundaries.
 - `slo-error-budget-release-gates.md` — SLI/SLO/error-budget policy, OpenSLO SLO-as-code, Grafana/Datadog reliability signals, Harness SLO-driven deployment governance/rollback, and bounded AI SRE integration.
 - `desktop-update-security.md` — desktop updater trust/signing/freshness, Windows MSIX/App Installer update+downgrade semantics, Sparkle 2 signing/update boundaries, and explicit rollback caveats.
