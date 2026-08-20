@@ -24,12 +24,14 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `core-toolchain.md` — language-agnostic baseline for debugging, linting/static analysis, formatting, testing, runners/build execution, LSP, best practices, and package/library ecosystems.
 - `language-domain-matrix.md` — verified implementations for JS/TS/Node, JVM/Java, C/C++, .NET/C#, Android, embedded/HIL, data/ML and games.
 - `domain-expansion-2026-08.md` — additional primary-source-backed domain baselines for Apple/iOS/Xcode, Unreal Engine, MLflow and ESP-IDF.
+- `performance-profiling-tracing.md` — language-agnostic profiling/tracing baseline, Perfetto, Go pprof/PGO, JFR, Windows ETW/WPR/WPA and bounded AI-assisted ETW analysis.
 - `supply-chain-security-fuzzing.md` — SLSA provenance/build guarantees, Sigstore/Cosign signing and attestations, OpenSSF Scorecard posture checks, OSS-Fuzz/CIFuzz, and bounded AI-assisted fuzzing evidence.
 - `application-security-sbom-policy.md` — SPDX/CycloneDX SBOMs, dependency vulnerability/license policy, secret scanning, SAST, DAST, runtime security, and deployment policy as code.
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
 - `release-deployment-progressive-delivery.md` — release/deployment evidence planes, Kubernetes rollout verification/rollback, GitHub environment gates, Argo Rollouts/Flagger progressive delivery, and bounded AI-assisted deployment operations.
 - `release-safety-flags-database-nonk8s.md` — feature flags/kill switches, database migration validation/recovery boundaries, and representative non-Kubernetes delivery/rollback semantics.
 - `zero-downtime-database-evolution.md` — expand/contract schema evolution, mixed-version compatibility, PostgreSQL 18 concurrent/deferrable validation primitives, MySQL 8.4 online-DDL boundaries, and deterministic migration gates.
+- `database-backfill-cdc.md` — long-running data backfills, CDC-assisted convergence, snapshot/stream overlap, validation and cutover boundaries.
 - `store-and-fleet-release-safety.md` — App Store/Google Play phased and staged rollout semantics plus AWS IoT Jobs and Azure Device Update fleet rollout, abort and rollback boundaries.
 - `slo-error-budget-release-gates.md` — SLI/SLO/error-budget policy, OpenSLO SLO-as-code, Grafana/Datadog reliability signals, Harness SLO-driven deployment governance/rollback, and bounded AI SRE integration.
 - `desktop-update-security.md` — desktop updater trust/signing/freshness, Windows MSIX/App Installer update+downgrade semantics, Sparkle 2 signing/update boundaries, and explicit rollback caveats.
