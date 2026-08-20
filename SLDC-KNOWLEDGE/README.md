@@ -24,7 +24,8 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `core-toolchain.md` — language-agnostic baseline for debugging, linting/static analysis, formatting, testing, runners/build execution, LSP, best practices, and package/library ecosystems.
 - `language-domain-matrix.md` — verified implementations for JS/TS/Node, JVM/Java, C/C++, .NET/C#, Android, embedded/HIL, data/ML and games.
 - `domain-expansion-2026-08.md` — additional primary-source-backed domain baselines for Apple/iOS/Xcode, Unreal Engine, MLflow and ESP-IDF.
-- `performance-profiling-tracing.md` — language-agnostic profiling/tracing baseline, Perfetto, Go pprof/PGO, JFR, Windows ETW/WPR/WPA and bounded AI-assisted ETW analysis.
+- `performance-profiling-tracing.md` — language-agnostic profiling/tracing baseline, Perfetto, Go pprof/PGO, JFR, Windows ETW/WPR/WPA, Linux `perf`/eBPF continuous profiling and bounded AI-assisted interpretation.
+- `performance-platform-ci.md` — Apple Instruments/`xctrace`, NVIDIA Nsight Systems/Compute, and reproducible/statistical performance-CI evidence and gating boundaries.
 - `supply-chain-security-fuzzing.md` — SLSA provenance/build guarantees, Sigstore/Cosign signing and attestations, OpenSSF Scorecard posture checks, OSS-Fuzz/CIFuzz, and bounded AI-assisted fuzzing evidence.
 - `application-security-sbom-policy.md` — SPDX/CycloneDX SBOMs, dependency vulnerability/license policy, secret scanning, SAST, DAST, runtime security, and deployment policy as code.
 - `container-iac-cloud-mobile-security.md` — container/image and repository scanning, IaC scanning, cloud security posture, mobile AppSec and bounded AI-assisted security remediation.
