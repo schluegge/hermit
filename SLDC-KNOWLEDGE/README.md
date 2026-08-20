@@ -45,6 +45,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `desktop-update-security.md` — desktop updater trust/signing/freshness, Windows MSIX/App Installer update+downgrade semantics, Sparkle 2 signing/update boundaries, and explicit rollback caveats.
 - `linux-desktop-updates.md` — Linux desktop update-channel baseline covering Flatpak, Snap and AppImage/AppImageUpdate, with explicit trust, refresh, downgrade/revert, data-state and automation boundaries.
 - `distribution-linux-package-management.md` — distribution-native Linux package-management baseline for APT/dpkg, DNF5/RPM, Zypper/Snapper/transactional-update, and Pacman, with explicit trust, transaction, downgrade, recovery, and automation boundaries.
+- `immutable-transactional-linux-updates.md` — immutable/transactional Linux OS-update baseline for rpm-ostree/OSTree deployments, bootc bootable OCI images, and NixOS generations, with explicit activation, persistence, retention, rollback, and health boundaries.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
 - `ai-sdlc.md` — cross-vendor AI-SDLC baseline, coding-tool taxonomy, verified automation classes, selection criteria and non-exhaustive research frontier.
 - `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
