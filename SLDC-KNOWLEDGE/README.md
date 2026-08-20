@@ -43,6 +43,7 @@ Required categories: debuggers; linters; formatters; testers; runners; LSP/langu
 - `store-and-fleet-release-safety.md` — App Store/Google Play phased and staged rollout semantics plus AWS IoT Jobs and Azure Device Update fleet rollout, abort and rollback boundaries.
 - `slo-error-budget-release-gates.md` — SLI/SLO/error-budget policy, OpenSLO SLO-as-code, Grafana/Datadog reliability signals, Harness SLO-driven deployment governance/rollback, and bounded AI SRE integration.
 - `desktop-update-security.md` — desktop updater trust/signing/freshness, Windows MSIX/App Installer update+downgrade semantics, Sparkle 2 signing/update boundaries, and explicit rollback caveats.
+- `linux-desktop-updates.md` — Linux desktop update-channel baseline covering Flatpak, Snap and AppImage/AppImageUpdate, with explicit trust, refresh, downgrade/revert, data-state and automation boundaries.
 - `agent-protocols.md` — MCP, A2A, ACP and their distinct integration roles.
 - `ai-sdlc.md` — cross-vendor AI-SDLC baseline, coding-tool taxonomy, verified automation classes, selection criteria and non-exhaustive research frontier.
 - `ai-ops-memory-context.md` — AI DevOps, AI CI/CD, agent memory, and context-management baseline with cross-vendor primary evidence.
